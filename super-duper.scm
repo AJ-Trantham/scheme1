@@ -2,22 +2,61 @@
 !#
 
 (define (super-duper source count)
-	source
-  	(if (null? source)
-		(copy '()))	
-		(cons (car source) (copy(super-duper (cdr source) (- count))))
-
-
+  	
+	(if (or (null? source) (not (pair? source)))
+		(dup source)	
+		(cons (copy (super-duper (car source) count) count)  (super-duper (cdr source) count))
+		)
 )
 
-;Makes a single copy of the element it is passed elem
-(define (copy elem) 
-	elem
+(define (copy elem count)
+	(if (> count 0)
+		(cons elem (copy elem (- count 1)))
+		'())
+)
+
+(define (dup source)
+	source
 )
 
 
 ;(display '(x))
+;(display "\n")
 (display "\n")
-;(display (copy '(x y)))
-(super-duper '(x y) 2)
+(display "Test (copy 10)")
 (display "\n")
+(display "Expected Result: (x x x x x x x x x x) ")(display "Actual Result: ")(display (copy '(x) 10))
+(display "\n")
+(display "\n")
+(display "Test (super-duper '(x) 1)")
+(display "\n")
+(display "Expected Result: (x) ")(display "Actual Result: ")(display (super-duper '(x) 1))
+(display "\n")
+(display "\n")
+(display "Test (super-duper '(x y) 4)")
+(display "\n")
+(display "Expected Result: (x x x x y y y y) ") (display "Actual Result: ")(display (super-duper '(x y) 4))
+(display "\n")
+(display "\n")
+(display "Test (super-duper 123 1)")
+(display "\n")
+(display "Expected Result: 123 ")(display "Actual Result: ")(display (super-duper 123 1))
+(display "\n")
+(display "\n")
+(display "Test (super-duper '() 1)")
+(display "\n")
+(display "Expected Result: () ")(display "Actual Result: ")(display (super-duper '() 1)) 
+(display "\n")
+(display "\n")
+(display "Test (super-duper '((a b) y) 1)")
+(display "\n")
+(display "Expected Result: ((a a a b b b) (a a a b b b) (a a a b b b) y y y) ")(display "Actual Result: ")
+(display (super-duper '((a b) y) 3))
+(display "\n")
+(display "\n")
+(display "Test (super-duper '(a (b y)) 1)")
+(display "\n")
+(display "Expected Result: (a a a (b b b y y y) (b b b y y y) (b b b y y y)) ")(display "Actual Result: ") (display (super-duper '(a (b y)) 3))
+(display "\n")
+(display "\n")
+
