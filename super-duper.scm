@@ -2,22 +2,50 @@
 !#
 
 (define (super-duper source count)
-	source
-  	(if (null? source)
-		(copy '()))	
-		(cons (car source) (copy(super-duper (cdr source) (- count))))
-
-
+  	
+	(if (or (null? source) (not (pair? source)))
+		(dup source)	
+		(cons (copy (car source) count)  (super-duper (cdr source) count))
+		)
 )
 
-;Makes a single copy of the element it is passed elem
-(define (copy elem) 
-	elem
+(define (copy elem count)
+	(if (> count 0)
+		(cons elem (copy elem (- count 1)))
+		'())
+)
+
+(define (dup source)
+	source
 )
 
 
 ;(display '(x))
+;(display "\n")
 (display "\n")
-;(display (copy '(x y)))
-(super-duper '(x y) 2)
 (display "\n")
+(display (copy '(x) 10))
+(display "\n")
+(display "\n")
+(display "\n")
+(display (super-duper '(x) 1))
+(display "\n")
+(display "\n")
+(display "\n")
+(display (super-duper '(x y) 4))
+(display "\n")
+(display "\n")
+(display "\n")
+(display (super-duper 123 1))
+(display "\n")
+(display "\n")
+(display "\n")
+(display (super-duper '() 1)) 
+(display "\n")
+(display "\n")
+(display "\n")
+(display "Actual Result: ")
+(display (super-duper '((a b) y) 3))
+(display "\n")
+(display "\n")
+
