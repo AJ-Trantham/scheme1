@@ -2,10 +2,6 @@
 !#
 
 (define (super-duper source count)
-  	
-	; try null here and don't return '() in copy
-
-
 	(if (or (null? source)(not (pair? source)))
 		(dup source)	
 		(append (copy (super-duper (car source) count) count)  (super-duper (cdr source) count))
@@ -63,10 +59,13 @@
 (display "\n")
 (display "\n")
 (display "Test (super-duper '(x) 1)")
+;(display '(x))
 (display "\n")
 (display "Expected Result: (x) ")
 (newline)
 (display "Actual Result: ")(display (super-duper '(x) 1))
+;(display (copy '(x y)))
+(super-duper '(x y) 2)
 (display "\n")
 (display "\n")
 (display "Test (super-duper '(x y) 4)")
